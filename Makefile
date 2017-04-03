@@ -25,6 +25,8 @@ WARN_COLOR	= \033[33;01m
 WHERE-AM-I = $(CURDIR)/$(word $(words $(MAKEFILE_LIST)),$(MAKEFILE_LIST))
 THIS_MAKEFILE := $(call WHERE-AM-I)
 
+
+
 # Echo some nice helptext based on the target comment
 HELPTEXT = $(ECHO) "$(ACTION)--->" `egrep "^\# target: $(1) " $(THIS_MAKEFILE) | sed "s/\# target: $(1)[ ]*-[ ]* / /g"` "$(NO_COLOR)"
 
@@ -111,6 +113,14 @@ build: test doc #less-compile less-minify js-minify
 .PHONY:  install
 install: prepare install-tools-php
 	@$(call HELPTEXT,$@)
+
+
+
+# target: less            - Compile less
+.PHONY:  less
+less:
+	@$(call HELPTEXT,$@)
+	lessc htdocs/css/style.less htdocs/css/style.css 
 
 
 
