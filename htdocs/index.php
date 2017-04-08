@@ -13,12 +13,13 @@ require ANAX_INSTALL_PATH . "/config/error_reporting.php";
 require ANAX_INSTALL_PATH . "/vendor/autoload.php";
 
 // Add all resources to $app
-$app = new \Alvo16\App\App();
+$app           = new \Alvo16\App\App();
 $app->request  = new \Anax\Request\Request();
 $app->url      = new \Anax\Url\Url();
 $app->router   = new \Anax\Route\RouterInjectable();
 $app->response = new \Anax\Response\Response();
 $app->view     = new \Anax\View\ViewContainer();
+$app->navbar   = new \Alvo16\Navbar\Navbar();
 
 // Inject $app into the view container for use in view files.
 $app->view->setApp($app);
@@ -45,3 +46,10 @@ require ANAX_INSTALL_PATH . "/config/route.php";
 
 // Leave to router to match incoming request to routes
 $app->router->handle($app->request->getRoute());
+
+$app->navbar->configure("navbar.php");
+$app->navbar->setCurrentRoute($app->request->getRoute());
+$app->navbar->setUrlCreator([$app->url, "create"]);
+
+// $myCallable = [$app->url, "create"];
+// $htmlNavbar = call_user_func($myCallable, "my/route");
