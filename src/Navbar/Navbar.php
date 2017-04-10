@@ -2,9 +2,13 @@
 
 namespace Alvo16\Navbar;
 
-class Navbar implements \Anax\Common\ConfigureInterface
+class Navbar implements \Anax\Common\AppInjectableInterface, \Anax\Common\ConfigureInterface
 {
+    use \Anax\Common\AppInjectableTrait;
     use \Anax\Common\ConfigureTrait;
+
+
+
     /**
      * Get HTML for the navbar.
      *
@@ -12,32 +16,21 @@ class Navbar implements \Anax\Common\ConfigureInterface
      */
     public function getHTML()
     {
-        ;
-    }
+        $items = $this->config['items'];
+        $con = $this->config['config'];
+        $navbarClass = $con['navbar-class'];
 
-    /**
-     * Sets the current route.
-     *
-     * @param string $route the current route.
-     *
-     * @return void
-     */
-    public function setCurrentRoute($route)
-    {
-        ;
-    }
+        $html = "<nav class='$navbarClass' role='navigation'>";
+        $html .= "<ul>";
+        foreach ($items as $key => $value) {
+            $url = $this->app->url->create($value['route']);
+            $text = $value['text'];
 
+            $html .= "<a href='$url'>$text</a>";
+        }
+        $html .= "</ul>";
+        $html .= "</nav>";
 
-
-    /**
-     * Sets the callable to use for creating routes.
-     *
-     * @param callable $urlCreate to create framework urls.
-     *
-     * @return void
-     */
-    public function setUrlCreator($urlCreate)
-    {
-        ;
+        return $html;
     }
 }

@@ -21,12 +21,12 @@ class ComposerStaticInit7ca65d3d1fce2562549caebc57f70ff5
     public static $prefixDirsPsr4 = array (
         'Anax\\' => 
         array (
-            0 => __DIR__ . '/..' . '/anax/request/src',
-            1 => __DIR__ . '/..' . '/anax/common/src',
-            2 => __DIR__ . '/..' . '/anax/url/src',
-            3 => __DIR__ . '/..' . '/anax/router/src',
-            4 => __DIR__ . '/..' . '/anax/response/src',
-            5 => __DIR__ . '/..' . '/anax/view/src',
+            0 => __DIR__ . '/..' . '/anax/common/src',
+            1 => __DIR__ . '/..' . '/anax/url/src',
+            2 => __DIR__ . '/..' . '/anax/router/src',
+            3 => __DIR__ . '/..' . '/anax/response/src',
+            4 => __DIR__ . '/..' . '/anax/view/src',
+            5 => __DIR__ . '/..' . '/anax/request/src',
         ),
         'Alvo16\\' => 
         array (

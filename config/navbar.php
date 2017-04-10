@@ -3,7 +3,7 @@
  * Config file for the navbar.
  */
 
-$navbar = [
+return [
     "config" => [
         "navbar-class" => "navbar"
     ],
@@ -20,6 +20,14 @@ $navbar = [
         "report" => [
             "text" => "Report",
             "route" => "report",
+        ],
+        "session" => [
+            "text" => "Session",
+            "route" => "session",
+        ],
+        "calendar" => [
+            "text" => "Calendar",
+            "route" => "calendar",
         ],
     ]
 ];
