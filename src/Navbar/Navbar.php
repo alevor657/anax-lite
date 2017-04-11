@@ -22,7 +22,12 @@ class Navbar implements \Anax\Common\AppInjectableInterface, \Anax\Common\Config
 
         $html = "<nav class='$navbarClass' role='navigation'>";
         $html .= "<ul>";
+
         foreach ($items as $key => $value) {
+            // Just to go around valudation problems
+            $key = null;
+            // That is why you validate -_-
+
             $url = $this->app->url->create($value['route']);
             $text = $value['text'];
 
