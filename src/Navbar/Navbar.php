@@ -31,8 +31,9 @@ class Navbar implements \Anax\Common\AppInjectableInterface, \Anax\Common\Config
             $url = $this->app->url->create($value['route']);
             $text = $value['text'];
 
-            $html .= "<a href='$url'>$text</a>";
+            $html .= "<a href='$url' class='menu_items'>$text</a>";
         }
+        $html .= "<a href='#' class='menu_items login_items' id='modal_activator'>Login/register</a>";
         $html .= "</ul>";
         $html .= "</nav>";
 

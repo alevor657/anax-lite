@@ -6,6 +6,7 @@
 $app->router->add("session", function () use ($app) {
     $app->view->add("take1/header", ["title" => "Home"]);
     $app->view->add("navbar1/navbar");
+    $app->view->add("take1/login_modal");
     $app->view->add("session/session");
     $app->view->add("take1/footer");
 

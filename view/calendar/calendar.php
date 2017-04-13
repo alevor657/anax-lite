@@ -1,7 +1,7 @@
 <?php
 $calendar = new \Alvo16\Calendar\Calendar();
 $calendar->setApp($app);
-echo $calendar->getHTMLCalendar();
+echo $calendar->getHTMLCalendarImproved();
 
 $app->session->dump();
 
