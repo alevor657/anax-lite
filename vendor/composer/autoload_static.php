@@ -27,6 +27,7 @@ class ComposerStaticInit7ca65d3d1fce2562549caebc57f70ff5
             3 => __DIR__ . '/..' . '/anax/response/src',
             4 => __DIR__ . '/..' . '/anax/view/src',
             5 => __DIR__ . '/..' . '/anax/request/src',
+            6 => __DIR__ . '/..' . '/anax/database/src',
         ),
         'Alvo16\\' => 
         array (

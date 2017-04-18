@@ -33,7 +33,18 @@ class Navbar implements \Anax\Common\AppInjectableInterface, \Anax\Common\Config
 
             $html .= "<a href='$url' class='menu_items'>$text</a>";
         }
-        $html .= "<a href='#' class='menu_items login_items' id='modal_activator'>Login/register</a>";
+
+        if ($this->app->session->has('user')) {
+            $name = $this->app->session->get('user');
+            $html .= "<a href='{$this->app->url->create('profile')}' class='menu_items login_items user_name'>Logged in as: $name</a>";
+            $html .= "<a href='{$this->app->url->create('logout')}' class='menu_items login_items logout_button'>Logout</a>";
+
+            if ($this->app->users->isAdmin()) {
+                $html .= "<a href='{$this->app->url->create('dashboard')}' class='menu_items login_items dashboard_button'>Dashboard</a>";
+            }
+        } else {
+            $html .= "<a href='#' class='menu_items login_items' id='modal_activator'>Login/register</a>";
+        }
         $html .= "</ul>";
         $html .= "</nav>";
 

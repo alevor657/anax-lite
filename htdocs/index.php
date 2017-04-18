@@ -21,11 +21,24 @@ $app->response = new \Anax\Response\Response();
 $app->view     = new \Anax\View\ViewContainer();
 $app->navbar   = new \Alvo16\Navbar\Navbar();
 $app->session  = new \Alvo16\Session\Session();
+$app->db       = new \Anax\Database\DatabaseConfigure();
+$app->users    = new \Alvo16\Users\Users();
+$app->cookie   = new \Alvo16\Cookie\Cookie();
+$app->dashboard = new \Alvo16\Dashboard\Dashboard();
+
+$app->db->configure('database.php');
+$app->db->setDefaultsFromConfiguration();
 
 $app->session->start();
 
 // Inject $app into the view container for use in view files.
 $app->view->setApp($app);
+
+$app->users->setApp($app);
+
+$app->cookie->setApp($app);
+
+$app->dashboard->setApp($app);
 
 // Update view configuration with values from config file.
 $app->view->configure("view.php");

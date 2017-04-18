@@ -309,5 +309,59 @@
             "micro",
             "mvc"
         ]
+    },
+    {
+        "name": "anax/database",
+        "version": "v1.0.4",
+        "version_normalized": "1.0.4.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/canax/database.git",
+            "reference": "90f27bedc6938bf11e73db79750779bcb86918f5"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/canax/database/zipball/90f27bedc6938bf11e73db79750779bcb86918f5",
+            "reference": "90f27bedc6938bf11e73db79750779bcb86918f5",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.6"
+        },
+        "require-dev": {
+            "anax/common": "^1.0"
+        },
+        "suggest": {
+            "anax/common": "To enhance integration with Anax framework."
+        },
+        "time": "2017-04-07 22:45:43",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Anax\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Mikael Roos",
+                "email": "mos@dbwebb.se",
+                "homepage": "https://dbwebb.se",
+                "role": "Developer"
+            }
+        ],
+        "description": "Anax Database module.",
+        "homepage": "https://dbwebb.se/anax",
+        "keywords": [
+            "boilerplate",
+            "education",
+            "framework",
+            "micro",
+            "mvc"
+        ]
     }
 ]

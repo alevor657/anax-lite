@@ -12,6 +12,9 @@ var regText = document.getElementById('reg-text');
 
 link.addEventListener('click', function () {
     modal.style.display = 'flex';
+    loginContainer.style.display = 'flex';
+    loginContainer.style.opacity = '1';
+    regText.style.opacity = '1';
 });
 
 closeButton.addEventListener('click', function () {
@@ -40,5 +43,8 @@ registerActivator.addEventListener('click', function() {
 window.onclick = function(event) {
     if (event.target == modal) {
         modal.style.display = "none";
+        loginContainer.style.display = 'flex';
+        regText.style.display = 'block';
+        registerContainer.style.display = "none";
     }
 };
