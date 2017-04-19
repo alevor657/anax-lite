@@ -26,6 +26,10 @@ $app->users    = new \Alvo16\Users\Users();
 $app->cookie   = new \Alvo16\Cookie\Cookie();
 $app->dashboard = new \Alvo16\Dashboard\Dashboard();
 
+$app->navbar->setApp($app);
+$app->navbar->configure("navbar.php");
+
+
 $app->db->configure('database.php');
 $app->db->setDefaultsFromConfiguration();
 

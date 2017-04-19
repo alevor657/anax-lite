@@ -11,9 +11,9 @@ class Session
     * @param string $name (optional) The name of the session
     * @return void
     */
-    public function __construct($name = "SOMERANDOMSTRING12342342423")
+    public function __construct()
     {
-        $this->name = $name;
+        $this->name = substr(preg_replace('/[^a-z\d]/i', '', __DIR__), -30);
     }
 
 

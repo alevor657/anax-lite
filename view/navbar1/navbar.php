@@ -1,11 +1,6 @@
 <?php
-$navbar = new \Alvo16\Navbar\Navbar();
-$navbar->setApp($app);
-$navbar->configure("navbar.php");
+echo $app->navbar->getHTML();
 ?>
-
-
-<?=$navbar->getHTML();?>
 
 
 <main>

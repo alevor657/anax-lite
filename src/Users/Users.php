@@ -6,10 +6,10 @@ class Users implements \Anax\Common\AppInjectableInterface
 {
     use \Anax\Common\AppInjectableTrait;
 
-    public function getUserData($name)
+    public function getUserData($id)
     {
         $this->app->db->connect();
-        $data = $this->app->db->executeFetchAll("SELECT * FROM users WHERE username = '$name'");
+        $data = $this->app->db->executeFetchAll("SELECT * FROM users WHERE id = '$id'");
 
         return $data[0];
     }
@@ -22,7 +22,6 @@ class Users implements \Anax\Common\AppInjectableInterface
 
         $username = $data['uname'];
         $psw = $data['psw'];
-        // $pswRepeat = $data['pswrepeat'];
         $admin = isset($data['admin']) ? 1 : 0;
 
         if ($isDataValid) {
@@ -33,8 +32,11 @@ class Users implements \Anax\Common\AppInjectableInterface
             self::addUser($username, $psw, $admin);
 
             // Redirect to the profile page
-            self::login($data);
-            header("Location: " . $this->app->url->create('profile')); //profile
+            if (strpos($_SERVER["HTTP_REFERER"], 'dashboard') !== false) {
+                header("Location: " . $this->app->url->create('dashboard'));
+            } else {
+                self::login($data);
+            }
         } else {
             // Redirect to error message
             header("Location: " . $this->app->url->create('wrongFormData'));
@@ -45,9 +47,10 @@ class Users implements \Anax\Common\AppInjectableInterface
     {
         $isValid = self::checkLoginData($data);
         $username = $data['uname'];
+        $id = self::getUserId($username);
 
         if ($isValid) {
-            $this->app->session->set("user", $username);
+            $this->app->session->set("user", $id);
             $this->app->cookie->set($username, "testCookie!");
             header("Location: " . $this->app->url->create('profile'));
         } else {
@@ -63,6 +66,8 @@ class Users implements \Anax\Common\AppInjectableInterface
 
     public function updateProfile($data)
     {
+        // var_dump($data);
+        // exit;
         $username = $data['uname'];
         $password = empty($data['psw']) ? null : $data['psw'];
         $id = $data['id'];
@@ -99,14 +104,18 @@ class Users implements \Anax\Common\AppInjectableInterface
     private function checkRegisterData($data)
     {
         $this->app->db->connect();
+        // var_dump($data);
+        // exit;
 
         $username = $data['uname'];
         $psw = $data['psw'];
-        $pswRepeat = $data['pswrepeat'];
+        $pswRepeat = isset($data['pswrepeat']) ? $data['pswrepeat'] : null;
         // $admin = isset($data['admin']) ? $data['admin'] : false;
 
-        if ($psw !== $pswRepeat) {
-            return false;
+        if (!empty($pswRepeat)) {
+            if ($psw !== $pswRepeat) {
+                return false;
+            }
         }
 
         $temp = $this->app->db->executeFetchAll("SELECT * FROM users WHERE username='$username'");
@@ -170,12 +179,16 @@ class Users implements \Anax\Common\AppInjectableInterface
 
     public function isAdmin($user = null)
     {
-        $currentUser = isset($user) ? $user : $this->app->session->get('user');
+        $this->app->db->connect();
+        $currentUser = isset($user) ? $user : self::getUsername($this->app->session->get('user'));
 
         $this->app->db->connect();
         $res = $this->app->db->executeFetchAll("SELECT admin FROM users WHERE username = '$currentUser'")[0]->admin;
+        // $res = 1;
+        // var_dump($res == 1 ? true : false);
 
-        return $res === 1 ? true : false;
+
+        return $res == 1 ? true : false;
     }
 
     public function getAllUsersData()
@@ -184,8 +197,6 @@ class Users implements \Anax\Common\AppInjectableInterface
         $sortSuffix = self::getSortingSuffix();
         $searchSuffix = self::getSearchSuffix();
         $res = $this->app->db->executeFetchAll("SELECT * FROM users" . ' ' . $searchSuffix . ' ' . $sortSuffix);
-        // var_dump("SELECT * FROM users" . ' ' . $searchSuffix . ' ' . $sortSuffix);
-        // exit;
 
         return $res;
     }
@@ -207,5 +218,17 @@ class Users implements \Anax\Common\AppInjectableInterface
         } else {
             return '';
         }
+    }
+
+    private function getUserId($name)
+    {
+        $sql = "SELECT id FROM users WHERE username = '$name'";
+        return $this->app->db->executeFetchAll($sql)[0]->id;
+    }
+
+    public function getUsername($id)
+    {
+        $sql = "SELECT username FROM users WHERE id = '$id'";
+        return $this->app->db->executeFetchAll($sql)[0]->username;
     }
 }

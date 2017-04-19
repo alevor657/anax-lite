@@ -51,12 +51,18 @@ $app->router->add("updateProfileDashboard", function () use ($app) {
         exit;
     }
 
+    $app->users->updateProfile($_POST);
+    header("Location: " . $app->url->create('dashboard'));
+});
+
+$app->router->add("removeUser", function () use ($app) {
+    if (!($app->session->has('user') && $app->users->isAdmin())) {
+        header('Location: ' . $app->url->create(''));
+        exit;
+    }
+
     if (!empty($_GET['delete'])) {
         $app->users->removeUser($_GET['delete']);
     }
-
-    // var_dump($_POST);
-    // exit;
-    $app->users->updateProfile($_POST);
     header("Location: " . $app->url->create('dashboard'));
 });

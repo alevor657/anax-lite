@@ -8,13 +8,13 @@ class Dashboard implements \Anax\Common\AppInjectableInterface
 
     public function getHTML()
     {
-        $data = $this->app->users->getAllUsersData();
         $this->app->db->connect();
+        $data = $this->app->users->getAllUsersData();
 
         $html = "<table class='dashboard_table'>";
         $html .= "<tr>";
 
-        $columns = self::getColumlNames();
+        $columns = self::getColumnNames();
 
         foreach ($columns as $key => $obj) {
             // Fix validation
@@ -43,19 +43,16 @@ class Dashboard implements \Anax\Common\AppInjectableInterface
             </td>";
 
             $html .= "<td>
-                    <input type='text' name='pwd' placeholder='new password'>
+                    <input type='text' name='psw' placeholder='new password'>
             </td>";
 
             $html .= "<td>
-                    <input type='checkbox'
-                     name='admin'
-                      ".($this->app->users->isAdmin($value->username)?"checked":"").">
+                    <input type='checkbox' name='admin' ".($this->app->users->isAdmin($value->username)?"checked":"").">
             </td>";
 
             $html .= "<td>
                     <input type='submit' value='Update profile'>
-                    <a href='{$this->app->url->create('updateProfileDashboard')}
-                    ?delete=$value->id'>delete</a>
+                    <a href='{$this->app->url->create('removeUser')}?delete=$value->id'>delete</a>
             </td>";
 
             $html .= "</form>";
@@ -73,7 +70,7 @@ class Dashboard implements \Anax\Common\AppInjectableInterface
         $html .= "</td>";
 
         $html .= "<td>";
-        $html .= "<input type='password' name='pwd' placeholder='New password'>";
+        $html .= "<input type='password' name='psw' placeholder='New password'>";
         $html .= "</td>";
 
         $html .= "<td>";
@@ -93,7 +90,7 @@ class Dashboard implements \Anax\Common\AppInjectableInterface
         return $html;
     }
 
-    private function getColumlNames($db = "oophp", $table = "users")
+    private function getColumnNames($db = "alvo16", $table = "users")
     {
         $sql = "SELECT `COLUMN_NAME`
         FROM `INFORMATION_SCHEMA`.`COLUMNS`

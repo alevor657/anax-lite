@@ -18,12 +18,12 @@
 
     <?=$app->dashboard->getHTML()?>
 
-<a href="<?= $app->url->create('calendar/next') ?>" class="next pagination">
+<!-- <a href="" class="next pagination">
     >
 </a>
 
-<a href="<?= $app->url->create('calendar/prev') ?>" class="prev pagination">
+<a href="" class="prev pagination">
     <
-</a>
+</a> -->
 
 </section>
