@@ -1,6 +1,13 @@
 Revision history
 =================================
 
+v1.0.4 (2017-04-13)
+---------------------------------
+
+* Add support for path/** to match subpaths.
+* Fix composer validate PHP version in require-dev. 
+
+
 v1.0.3 (2017-03-26)
 ---------------------------------
 

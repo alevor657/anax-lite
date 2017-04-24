@@ -143,7 +143,10 @@ class Response
         if ($statusCode) {
             $this->setStatusCode($statusCode);
         }
-        $this->sendHeaders();
+
+        if (!headers_sent()) {
+            $this->sendHeaders();
+        }
         echo $this->getBody();
     }
 
@@ -163,8 +166,10 @@ class Response
             $this->setStatusCode($statusCode);
         }
 
-        $this->addHeader("Content-Type: application/json; charset=utf8");
-        $this->sendHeaders();
+        if (!headers_sent()) {
+            $this->addHeader("Content-Type: application/json; charset=utf8");
+            $this->sendHeaders();
+        }
         echo json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
     }
 

@@ -133,12 +133,17 @@ class Users implements \Anax\Common\AppInjectableInterface
         $psw = $data['psw'];
 
         $this->app->db->connect();
+        // var_dump($this->app->db->executeFetchAll(
+        //     "SELECT password FROM users WHERE username = '$username'"
+        // ));
+        // exit;
+
         $hash = $this->app->db->executeFetchAll(
             "SELECT password FROM users WHERE username = '$username'"
-        )[0]->password;
+        );
 
         if (!empty($hash)) {
-            return self::verifyPassword($psw, $hash);
+            return self::verifyPassword($psw, $hash[0]->password);
         } else {
             header("Location: " . $this->app->url->create('wrongFormData'));
         }
