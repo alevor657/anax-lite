@@ -7,4 +7,5 @@ $baseDir = dirname($vendorDir);
 
 return array(
     '6b9cbd293adb7d895e163aebb2790539' => $vendorDir . '/anax/common/src/functions.php',
+    '2cffec82183ee1cea088009cef9a6fc3' => $vendorDir . '/ezyang/htmlpurifier/library/HTMLPurifier.composer.php',
 );

@@ -25,6 +25,7 @@ $app->db       = new \Anax\Database\DatabaseConfigure();
 $app->users    = new \Alvo16\Users\Users();
 $app->cookie   = new \Alvo16\Cookie\Cookie();
 $app->dashboard = new \Alvo16\Dashboard\Dashboard();
+$app->filter   = new \Mos\TextFilter\CTextFilter();
 
 $app->navbar->setApp($app);
 $app->navbar->configure("navbar.php");

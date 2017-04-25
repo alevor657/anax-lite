@@ -29,5 +29,9 @@ return [
             "text" => "Calendar",
             "route" => "calendar",
         ],
+        "textfilter" => [
+            "text" => "Textfilter",
+            "route" => "filter/sample",
+        ],
     ]
 ];
