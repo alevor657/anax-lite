@@ -33,5 +33,9 @@ return [
             "text" => "Textfilter",
             "route" => "filter/sample",
         ],
+        "content" => [
+            "text" => "Content",
+            "route" => "content",
+        ],
     ]
 ];

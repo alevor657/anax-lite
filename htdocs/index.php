@@ -26,8 +26,12 @@ $app->users    = new \Alvo16\Users\Users();
 $app->cookie   = new \Alvo16\Cookie\Cookie();
 $app->dashboard = new \Alvo16\Dashboard\Dashboard();
 $app->filter   = new \Mos\TextFilter\CTextFilter();
+$app->content  = new \Alvo16\Content\Content();
+$app->page    = new \Alvo16\Content\Page();
 
 $app->navbar->setApp($app);
+$app->content->setApp($app);
+$app->page->setApp($app);
 $app->navbar->configure("navbar.php");
 
 

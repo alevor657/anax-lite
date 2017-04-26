@@ -187,13 +187,14 @@ class Users implements \Anax\Common\AppInjectableInterface
         $this->app->db->connect();
         $currentUser = isset($user) ? $user : self::getUsername($this->app->session->get('user'));
 
-        $this->app->db->connect();
-        $res = $this->app->db->executeFetchAll("SELECT admin FROM users WHERE username = '$currentUser'")[0]->admin;
-        // $res = 1;
-        // var_dump($res == 1 ? true : false);
+        if (isset($currentUser)) {
+            $this->app->db->connect();
+            $res = $this->app->db->executeFetchAll("SELECT admin FROM users WHERE username = '$currentUser'")[0]->admin;
 
-
-        return $res == 1 ? true : false;
+            return $res == 1 ? true : false;
+        } else {
+            return false;
+        }
     }
 
     public function getAllUsersData()
@@ -233,6 +234,9 @@ class Users implements \Anax\Common\AppInjectableInterface
 
     public function getUsername($id)
     {
+        if (empty($id)) {
+            return null;
+        }
         $sql = "SELECT username FROM users WHERE id = '$id'";
         return $this->app->db->executeFetchAll($sql)[0]->username;
     }
