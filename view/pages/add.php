@@ -19,6 +19,7 @@
                     <select name="type">
                         <option value="page">page</option>
                         <option value="blog">blog</option>
+                        <option value="block">block</option>
                     </select>
                 </td>
                 <td>
@@ -39,29 +40,3 @@
             <input class="edit_data_submit" type="submit" value="Save">
     </form>
 </div>
-
-
-
-
-
-<!-- <td>
-    <div class="td_filters_wrapper">
-        <label for="nl2br">nl2br</label>
-        <input id="nl2br" type="checkbox" name="nl2br" value="nl2br">
-    </div>
-
-    <div class="td_filters_wrapper">
-        <label for="markdown">md</label>
-        <input id="markdown" type="checkbox" name="markdown" value="markdown">
-    </div>
-
-    <div class="td_filters_wrapper">
-        <label for="bbcode">bbcode</label>
-        <input id="bbcode" type="checkbox" name="bbcode" value="bbcode">
-    </div>
-
-    <div class="td_filters_wrapper">
-        <label for="clickable">clickable</label>
-        <input id="clickable" type="checkbox" name="clickable" value="clickable">
-    </div>
-</td> -->

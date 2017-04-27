@@ -1,5 +1,5 @@
 <?php
-$data = $app->page->getData($app->request->getGet('id'));
+$data = $app->content->getData($app->request->getGet('id'));
 
  ?>
 

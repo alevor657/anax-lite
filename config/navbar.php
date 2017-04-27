@@ -37,5 +37,9 @@ return [
             "text" => "Content",
             "route" => "content",
         ],
+        "blog" => [
+            "text" => "Blog",
+            "route" => "blog",
+        ],
     ]
 ];

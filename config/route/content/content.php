@@ -93,3 +93,15 @@ $app->router->add("content/edit/delete", function () use ($app) {
     $app->content->delete($id);
     $app->response->redirect($app->url->create('content'));
 });
+
+
+
+/**
+ *
+ *
+ */
+$app->router->add("content/edit/purge", function () use ($app) {
+    $id = $app->request->getGet('purge');
+    $app->content->purge($id);
+    $app->response->redirect($app->url->create('content'));
+});

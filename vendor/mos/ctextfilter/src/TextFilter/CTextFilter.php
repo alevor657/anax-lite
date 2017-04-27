@@ -65,6 +65,7 @@ class CTextFilter
         $callbacks = [
             'bbcode'    => 'bbcode2html',
             'clickable' => 'makeClickable',
+            'link' => 'makeClickable',
             'shortcode' => 'shortCode',
             'markdown'  => 'markdown',
             'nl2br'     => 'nl2br',
@@ -578,7 +579,7 @@ class CTextFilter
         //$config->set('Cache.SerializerPath', '/home/user/absolute/path');
 
         $purifier = new \HTMLPurifier($config);
-    
+
         return $purifier->purify($text);
     }
 

@@ -16,7 +16,7 @@
             <?php endif; ?>
         </tr>
 
-        <?php foreach ($app->page->getData() as $row) :?>
+        <?php foreach ($app->content->getData() as $row) :?>
 
         <tr>
             <td><?=esc($row->id)?></td>
@@ -34,6 +34,8 @@
                     <a href='<?=$app->url->create('content/edit') . "?id=$row->id"?>'>Edit</a>
                     <br>
                     <a href='<?=$app->url->create('content/edit/delete') . "?delete=$row->id"?>'>Delete</a>
+                    <br>
+                    <a href='<?=$app->url->create('content/edit/purge') . "?purge=$row->id"?>'>Purge</a>
                 </td>
             <?php endif; ?>
         </tr>
