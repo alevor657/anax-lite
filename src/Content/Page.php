@@ -9,16 +9,33 @@ class Page extends Content
     public function getData($id = null)
     {
         if (!$id) {
-            $sql = "SELECT `id`, `title`, `type`, `created`, `updated`, `deleted`, `path`, `slug`, `data`, `filter`
-            FROM content
-            WHERE `type` = 'page'";
-        } else {
-            $sql = "SELECT `id`, `title`, `type`, `created`, `updated`, `deleted`, `path`, `slug`, `data`, `filter`
-            FROM content
-            WHERE `type` = 'page'
-                AND `id` = '$id'";
+            $sql = <<<EOD
+SELECT
+    *,
+    CASE
+        WHEN (deleted <= NOW()) THEN "isDeleted"
+        WHEN (published <= NOW()) THEN "isPublished"
+        ELSE "notPublished"
+    END AS status
+FROM content
+;
+EOD;
         }
-
+        else
+        {
+            $sql = <<<EOD
+SELECT
+    *,
+    CASE
+        WHEN (deleted <= NOW()) THEN "isDeleted"
+        WHEN (published <= NOW()) THEN "isPublished"
+        ELSE "notPublished"
+    END AS status
+FROM content
+WHERE `id` = '$id'
+;
+EOD;
+        }
         return $this->app->db->executeFetchAll($sql);
     }
 }

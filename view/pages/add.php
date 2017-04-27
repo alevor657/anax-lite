@@ -1,56 +1,41 @@
-<?php
-$data = $app->page->getData($app->request->getGet('id'));
-
- ?>
-
 <div class="edit_wrapper">
-    <form class="" action="<?=$app->url->create('content/edit/updateContent')?>" method="post">
+    <form class="" action="<?=$app->url->create('content/edit/createContent')?>" method="post">
         <table class="dashboard_table">
             <tr>
-                <th>Id</th>
                 <th>Title</th>
                 <th>Type</th>
                 <th>Path</th>
                 <th>Slug</th>
                 <th>Filters</th>
                 <th>Published</th>
-                <th>Deleted</th>
             </tr>
 
-            <?php foreach ($data as $row) :?>
 
             <tr>
-                <td><?=esc($row->id)?></td>
-
                 <td>
-                    <input type="text" name="title" value="<?=esc($row->title)?>">
+                    <input type="text" name="title">
                 </td>
                 <td>
                     <select name="type">
-                        <option value="page" <?=$row->type === 'page' ? 'selected' : ''?>>page</option>
-                        <option value="blog" <?=$row->type === 'blog' ? 'selected' : ''?>>blog</option>
+                        <option value="page">page</option>
+                        <option value="blog">blog</option>
                     </select>
                 </td>
                 <td>
-                    <input type="text" name="formPath" value="<?=esc($row->path)?>">
+                    <input type="text" name="formPath">
                 </td>
                 <td>
-                    <input type="text" name="slug" value="<?=esc($row->slug)?>">
+                    <input type="text" name="slug">
                 </td>
                 <td>
-                    <input type="text" name="filter" value="<?=esc($row->filter)?>">
+                    <input type="text" name="filter">
                 </td>
                 <td>
-                    <input type="date" name="published" value="<?=date('Y-m-d')?>">
-                </td>
-                <td>
-                    <input type="date" name="deleted" value="">
+                    <input type="date" name="published">
                 </td>
             </tr>
-            <?php endforeach; ?>
         </table>
-            <textarea class="edit_data_input" name="data" rows="8" cols="80"><?=esc($row->data)?></textarea>
-            <input type="text" name="id" value="<?=esc($row->id)?>" hidden>
+            <textarea class="edit_data_input" name="data" rows="8" cols="80"></textarea>
             <input class="edit_data_submit" type="submit" value="Save">
     </form>
 </div>
