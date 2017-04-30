@@ -10,5 +10,5 @@ $data = $app->content->getDataByPath($route);
         <p><i>Latest update: <time datetime="<?= esc($data->modified_iso8601) ?>" pubdate><?= esc($data->modified) ?></time></i></p>
     </header>
 
-    <?=esc($data->data)?>
+    <?=$app->filter->doFilter($data->data, $data->filter)?>
 </article>

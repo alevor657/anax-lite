@@ -13,23 +13,23 @@
 
             <tr>
                 <td>
-                    <input type="text" name="title">
+                    <input type="text" name="title" required>
                 </td>
                 <td>
                     <select name="type">
                         <option value="page">page</option>
-                        <option value="blog">blog</option>
+                        <option value="post">post (blog)</option>
                         <option value="block">block</option>
                     </select>
                 </td>
                 <td>
-                    <input type="text" name="formPath">
+                    <input type="text" name="formPath" required>
                 </td>
                 <td>
                     <input type="text" name="slug">
                 </td>
                 <td>
-                    <input type="text" name="filter">
+                    <input type="text" name="filter" value="bbcode, markdown, nl2br, link">
                 </td>
                 <td>
                     <input type="date" name="published">

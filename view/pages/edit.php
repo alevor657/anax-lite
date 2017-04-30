@@ -1,7 +1,7 @@
 <?php
 $data = $app->content->getData($app->request->getGet('id'));
 
- ?>
+?>
 
 <div class="edit_wrapper">
     <form class="" action="<?=$app->url->create('content/edit/updateContent')?>" method="post">
@@ -28,7 +28,8 @@ $data = $app->content->getData($app->request->getGet('id'));
                 <td>
                     <select name="type">
                         <option value="page" <?=$row->type === 'page' ? 'selected' : ''?>>page</option>
-                        <option value="blog" <?=$row->type === 'blog' ? 'selected' : ''?>>blog</option>
+                        <option value="post" <?=$row->type === 'post' ? 'selected' : ''?>>blog/post</option>
+                        <option value="block" <?=$row->type === 'block' ? 'selected' : ''?>>block</option>
                     </select>
                 </td>
                 <td>

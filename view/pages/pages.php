@@ -11,7 +11,7 @@
             <th>Status</th>
             <th>Path</th>
             <th>Slug</th>
-            <?php if ($app->users->isAdmin()): ?>
+            <?php if ($app->users->isAdmin()) : ?>
                 <th>Actions</th>
             <?php endif; ?>
         </tr>
@@ -29,7 +29,7 @@
             <td><?=esc($row->status)?></td>
             <td><?=esc($row->path)?></td>
             <td><?=esc($row->slug)?></td>
-            <?php if ($app->users->isAdmin()): ?>
+            <?php if ($app->users->isAdmin()) : ?>
                 <td>
                     <a href='<?=$app->url->create('content/edit') . "?id=$row->id"?>'>Edit</a>
                     <br>
@@ -44,7 +44,7 @@
 
     </table>
 
-    <?php if ($app->users->isAdmin()): ?>
+    <?php if ($app->users->isAdmin()) : ?>
         <a href='<?=$app->url->create('content/edit/addContent')?>'>Add content</a>
     <?php endif; ?>
 

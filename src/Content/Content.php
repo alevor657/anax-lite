@@ -20,14 +20,15 @@ class Content implements \Anax\Common\AppInjectableInterface
     {
         if (!$route) {
             $sql = <<<EOD
-        SELECT * FROM content WHERE type = 'post'
+        SELECT * FROM `content` WHERE `type` = 'post';
 EOD;
         } else {
             $sql = <<<EOD
-            SELECT * FROM content WHERE type = 'post' AND slug = '$route'
+            SELECT * FROM `content` WHERE `type` = 'post' AND `slug` = '$route';
 EOD;
         }
 
+        $this->app->db->connect();
         $data = $this->app->db->executeFetchAll($sql);
 
         if (!$data) {
@@ -39,7 +40,7 @@ EOD;
 
 
 
-    public function getBlockData($id = null)
+    public function getBlockData()
     {
         // if (!$id) {
             $sql = <<<EOD
@@ -55,8 +56,7 @@ EOD;
         $data = $this->app->db->executeFetchAll($sql);
 
         if (!$data) {
-            $this->app->response->redirect($this->app->url->create('404'));
-            exit;
+            return null;
         }
 
         return $data[0];
@@ -78,9 +78,7 @@ SELECT
 FROM content
 ;
 EOD;
-        }
-        else
-        {
+        } else {
             $sql = <<<EOD
 SELECT
     *,
@@ -94,16 +92,18 @@ WHERE `id` = '$id'
 ;
 EOD;
         }
+        $this->app->db->connect();
         return $this->app->db->executeFetchAll($sql);
     }
 
     public function updateContent($data)
     {
-        if (!self::checkSlug($data['slug'])) {
-            var_dump("Given slug exists!");
-            var_dump($data['slug']);
-            exit;
-        }
+        // if (!self::checkSlug($data['slug'])) {
+        //     var_dump("Given slug exists!");
+        //     var_dump($data['slug']);
+        // }
+
+        self::checkSlug($data);
 
         $sql = "UPDATE content
         SET
@@ -119,7 +119,6 @@ EOD;
 
         // var_dump($sql);
         // var_dump($data);
-        // exit;
         if (!$data['slug']) {
             $data['slug'] = slugify($data['title']);
         }
@@ -134,15 +133,25 @@ EOD;
 
     public function add($data)
     {
-        if (!self::checkSlug($data['slug'])) {
-            var_dump("Given slug exists!");
-            var_dump($data['slug']);
-            exit;
+        // if (!self::checkSlug($data['slug'])) {
+        //     var_dump("Given slug exists!");
+        //     var_dump($data['slug']);
+        //     exit;
+        // }
+
+        self::checkSlug($data);
+
+        // if (!$data['formPath']) {
+        //     $data['formPath'] = null;
+        // }
+        foreach (array_values($data) as $value) {
+            if ($value == "") {
+                $value = null;
+            }
         }
 
-        if (!$data['formPath']) {
-            $data['formPath'] = null;
-        }
+        // var_dump($data);
+        // exit;
 
         if (!$data['slug']) {
             $data['slug'] = slugify($data['title']);
@@ -168,7 +177,9 @@ EOD;
             ?,
             ?)";
 
-        var_dump($sql);
+        // var_dump($sql);
+        // var_dump($data);
+        // exit;
 
         $this->app->db->connect();
         $this->app->db->execute($sql, array_values($data));
@@ -219,15 +230,27 @@ EOD;
         return $data[0];
     }
 
-    private function checkSlug($slug)
+    private function checkSlug($data)
     {
-        $sql = "SELECT slug FROM content";
+        $sql = "SELECT slug, title FROM content";
 
+        $this->app->db->connect();
         $res = $this->app->db->executeFetchAll($sql);
+
+        $slug = $data['slug'];
+
+        // var_dump($res);
+        // echo PHP_EOL;
+        // var_dump($data);
+        // exit;
 
         foreach ($res as $elem) {
             if ($elem->slug === $slug) {
-                return false;
+                $currentTitle = $data['title'];
+
+                if ($elem->title != $currentTitle) {
+                    throw new \Exception("Given slug exists!", 1);
+                }
             }
         }
 
