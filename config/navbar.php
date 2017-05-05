@@ -41,5 +41,9 @@ return [
             "text" => "Blog",
             "route" => "blog",
         ],
+        "webshop" => [
+            "text" => "Webshop",
+            "route" => "webshop",
+        ],
     ]
 ];

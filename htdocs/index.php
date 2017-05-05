@@ -27,9 +27,11 @@ $app->cookie   = new \Alvo16\Cookie\Cookie();
 $app->dashboard = new \Alvo16\Dashboard\Dashboard();
 $app->filter   = new \Mos\TextFilter\CTextFilter();
 $app->content  = new \Alvo16\Content\Content();
+$app->shop     = new \Alvo16\Shop\Shop();
 
 $app->navbar->setApp($app);
 $app->content->setApp($app);
+$app->shop->setApp($app);
 $app->navbar->configure("navbar.php");
 
 
