@@ -2,9 +2,6 @@
 
 namespace Alvo16\Calendar;
 
-/**
- * A class for calendar
- */
 class Calendar implements \Anax\Common\AppInjectableInterface
 {
 
@@ -170,3 +167,4 @@ class Calendar implements \Anax\Common\AppInjectableInterface
         }
     }
 }
+
