@@ -1,15 +1,18 @@
 <?php
 $cols = $app->shop->getColumnNames();
 // var_dump($data);
- ?>
+?>
 
 <div class="pages_wrapper">
     <form class="" action="<?=$app->url->create('webshop/edit/addToStock')?>" method="post">
         <table class="dashboard_table">
             <tr>
-                <?php foreach (array_values($cols) as $col): ?>
-                    <th><?=$col->COLUMN_NAME?></th>
-                <?php endforeach; ?>
+                <th>Id</th>
+                <th>description</th>
+                <th>img link</th>
+                <th>category</th>
+                <th>price</th>
+                <th>quantity</th>
             </tr>
 
             <tr>

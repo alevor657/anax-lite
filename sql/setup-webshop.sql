@@ -1,5 +1,15 @@
 USE `oophp`;
 
+/*
+	README
+
+	Jag gick igenom databasen och märkte att jag redan använder massa index så att 
+	jag har inte hittat så många ställen att sätta in några. 
+	Jag har kontrollerat ett tal select satser och mina tabeller och jag tycker att
+	allting ser tillräckligt bra ut.
+
+*/
+
 -- -----------------------------------------------------
 -- Table `oophp`.`category`
 -- -----------------------------------------------------
@@ -17,54 +27,65 @@ create table stock (
     `category` int,
     `price` int not null,
     `quantity` int unsigned,
-
+    
     primary key (`id`)
 );
+
+explain stock;
 
 create table category (
 	`id` int unsigned auto_increment not null,
     `name` varchar(20),
-
+    
     primary key (`id`)
 );
+
+explain category;
 
 create table cart (
 	`id` int unsigned auto_increment not null,
     `item_id` int unsigned,
     `item_qty` int unsigned,
-
+    
     primary key (`id`),
     foreign key (`item_id`) references `stock` (`id`)
 );
+
+explain cart;
 
 create table orderRow (
 	`id` int unsigned auto_increment not null,
     `order_id` int unsigned,
     `item_id` int unsigned,
     `item_qty` int unsigned,
-
+    
 	primary key (`id`),
     foreign key (`item_id`) references `stock` (`id`)
 );
+
+explain orderRow;
 
 create table orders (
 	`id` int unsigned auto_increment not null,
     `order_row_id` int unsigned,
 	`order_date` DATETIME DEFAULT CURRENT_TIMESTAMP,
-
+    
     primary key (`id`),
     foreign key (`order_row_id`) references `orderRow`(`id`)
 );
+
+explain orders;
 
 create table neededStuff (
 	`id` int unsigned auto_increment not null,
     `date` DATETIME DEFAULT CURRENT_TIMESTAMP,
     `name` varchar(255),
     `product_ids` varchar(255),
-
+    
     primary key (`id`)
 );
 
+explain neededStuff;
 
 insert into stock values (
 	null,
@@ -109,7 +130,7 @@ insert into stock values (
 
 insert into category(name)
 	values ('plate'), ('mug');
-
+    
 insert into cart
 (
 	`item_id`,
@@ -119,11 +140,6 @@ values
 	(2, 2),
     (1, 1),
     (3, 1);
-
-
-select * from category;
-select * from stock;
-
 
 DROP VIEW IF EXISTS VgetStock;
 create view VgetStock
@@ -138,14 +154,15 @@ SELECT
 FROM `stock` as s
 	inner join category as c
 		on s.category = c.id;
-
+        
 select * from VgetStock;
+explain select * from VgetStock;
 
-
+        
 DROP VIEW IF EXISTS VgetCart;
 create view VgetCart
 as
-SELECT
+SELECT 
 	s.id as 'stockId',
 	ca.id,
 	s.description,
@@ -158,8 +175,9 @@ from ((`stock` as s
 		on s.category = c.id)
 	inner join cart as ca
 		on ca.item_id = s.id);
-
+        
 select * from VgetCart;
+explain select * from VgetCart;
 
 --
 
@@ -172,16 +190,16 @@ create procedure addToCart(
 begin
 	set @qtyInStock = (select quantity from stock where id = addId);
     set @qtyInCart = (select item_qty from cart where item_id = addId);
-    set @currentCartItem = (select item_id from cart where item_id = addId);
-
+    set @currentCartItem = (select item_id from cart where item_id = addId); 
+    
 	select @qtyInStock, @qtyInCart, @currentCartItem, addId;
-
+            
 	if @qtyInStock > @qtyInCart or @qtyInCart is null
     then
 		if @currentCartItem is null
         then
 			insert into `cart` (item_id, item_qty) values (addId, 1);
-		else
+		else 
 			update cart set item_qty = item_qty + 1 where item_id = addId;
         end if;
 	end if;
@@ -190,6 +208,8 @@ end
 //
 
 delimiter ;
+
+explain select item_qty from cart where item_id = 1;
 
 drop procedure if exists removeFromCart;
 
@@ -214,7 +234,7 @@ BEGIN
     START TRANSACTION;
 		insert into orders values();
 		set @currentOrderId = (select max(id) from orders);
-
+    
 		insert into orderRow
         (
 			order_id,
@@ -226,17 +246,17 @@ BEGIN
             item_id,
             item_qty
 		from cart;
-
+        
         update orders
 			set order_row_id = @currentOrderId
 			where order_row_id is null;
-
-
+            
+		
 		update stock
         join cart
 			set quantity = (select quantity - item_qty from cart where item_id = stock.id)
             where stock.id = cart.item_id;
-
+		
 		-- delete from cart;
     commit;
 END
@@ -256,7 +276,7 @@ create procedure getOrderDetails(
 	orderId integer
 )
 	begin
-
+		
         select
 			o.order_date as 'order_date',
             o.id as 'order_id',
@@ -273,7 +293,7 @@ create procedure getOrderDetails(
 				on ordR.item_id = s.id
 
 		where o.id = orderId;
-
+            
 	end
 //
 
@@ -308,37 +328,12 @@ select * from orders;
 select * from orderRow;
 select * from neededStuff;
 
-
-
- /*
-DROP VIEW IF EXISTS VgetCart;
-create view VgetCart
-as
-SELECT
-	ca.id,
-	s.description,
-	s.img,
-	c.name as 'category',
-	s.price,
-	ca.item_qty as 'quantity'
-from ((`stock` as s
-	inner join category as c
-		on s.category = c.id)
-	inner join cart as ca
-		on ca.item_id = s.id);
-
-select * from VgetCart;
-
-*/
-
-select * from neededStuff;
-
 drop trigger if exists writeToRefillTable;
 
 delimiter //
 
 create trigger writeToRefillTable
-before update
+before update 
 on stock for each row
 	if new.quantity < 5
     then
@@ -353,14 +348,14 @@ on stock for each row
             new.id
         );
 	end if;
-
+        
 //
-
+    
 delimiter ;
 
 drop view if exists VgetNeedeStuff;
 create view VgetNeedeStuff
 as
 	select distinct `date`, `name` from neededStuff;
-
+    
 select * from VgetNeedeStuff;
